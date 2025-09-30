@@ -872,6 +872,57 @@
         .order-book-total {
             font-weight: bold;
         }
+        /* Existing styles remain the same. Adding Binance-like enhancements */
+        .order-book th {
+            background: rgba(245, 158, 11, 0.1);
+            padding: 0.75rem;
+            font-weight: bold;
+            text-align: right;
+        }
+        .order-book td {
+            padding: 0.5rem;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.5);
+            text-align: right;
+        }
+        .buy-order {
+            color: #26a69a; /* Binance green */
+        }
+        .sell-order {
+            color: #f45567; /* Binance red */
+        }
+        .depth-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        .buy-depth {
+            background: #26a69a;
+        }
+        .sell-depth {
+            background: #f45567;
+        }
+        .recent-trades td {
+            text-align: right;
+        }
+        /* Adjust chart container for larger size */
+        #chart-container {
+            height: 90vh !important;
+            min-height: 600px;
+        }
+        /* Binance-like colors and fonts */
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+        .market-data {
+            background: #1e222d; /* Binance dark blue-gray */
+        }
+        .pair-button.active {
+            background: #f0b90b !important; /* Binance yellow */
+            color: #000 !important;
+        }
     </style>
 </head>
 <body>
@@ -1710,142 +1761,134 @@
                     </div>
                     <!-- Internal Market Page (Exchange) -->
                     <div id="exchange-page" class="page-content exchange-bg">
-                        <div class="exchange-card p-6 mb-6">
-                            <h1 class="text-3xl font-bold text-amber-400 mb-4 flex items-center">
+                        <div class="exchange-card p-4 mb-4">
+                            <h1 class="text-3xl font-bold text-amber-400 mb-2 flex items-center">
                                 <i data-lucide="dollar-sign" class="w-8 h-8 mr-2"></i>
                                 Internal Market - BossX
                             </h1>
-                            <p class="text-gray-400 mb-6">Trade cryptocurrency dengan tampilan mewah dan fitur canggih. Pilih pair trading Anda.</p>
+                            <p class="text-gray-400 mb-4">Trade cryptocurrency with Binance-like interface and real data.</p>
                         </div>
-                        <!-- Saldo Akun -->
-                        <div class="exchange-card p-6 mb-6">
-                            <h2 class="text-xl font-bold text-white mb-4">Saldo Akun</h2>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="bg-gray-800/50 p-4 rounded-lg">
-                                    <p class="text-gray-400 text-sm">BossX</p>
-                                    <p id="exchange-bossx-balance" class="text-2xl font-bold text-white">1000 BossX</p>
-                                </div>
-                                <div class="bg-gray-800/50 p-4 rounded-lg">
-                                    <p class="text-gray-400 text-sm">USDT</p>
-                                    <p id="exchange-usdt-balance" class="text-2xl font-bold text-white">1000 USDT</p>
-                                </div>
+                        <!-- Saldo Akun (Top Left, compact) -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="exchange-card p-4">
+                                <p class="text-gray-400 text-sm">BossX Balance</p>
+                                <p id="exchange-bossx-balance" class="text-xl font-bold text-white">1000 BossX</p>
+                            </div>
+                            <div class="exchange-card p-4">
+                                <p class="text-gray-400 text-sm">USDT Balance</p>
+                                <p id="exchange-usdt-balance" class="text-xl font-bold text-white">1000 USDT</p>
                             </div>
                         </div>
-                        <!-- Pair Selector -->
-                        <div class="exchange-card p-6 mb-6">
-                            <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-                                <i data-lucide="coins" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                Trading Pairs
-                            </h2>
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-                                <button class="pair-button active" data-pair="BossX/USDT">BossX/USDT</button>
-                                <button class="pair-button" data-pair="BTC/USDT">BTC/USDT</button>
-                                <button class="pair-button" data-pair="ETH/USDT">ETH/USDT</button>
-                                <button class="pair-button" data-pair="SOL/USDT">SOL/USDT</button>
+                        <!-- Pair Selector and Market Data (Binance-style top bar) -->
+                        <div class="exchange-card p-4 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                            <div>
+                                <h2 class="text-lg font-bold text-white mb-2">Trading Pairs</h2>
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="pair-button active" data-pair="BossX/USDT">BossX/USDT</button>
+                                    <button class="pair-button" data-pair="BTC/USDT">BTC/USDT</button>
+                                    <button class="pair-button" data-pair="ETH/USDT">ETH/USDT</button>
+                                    <button class="pair-button" data-pair="SOL/USDT">SOL/USDT</button>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Market Data -->
-                        <div class="exchange-card p-6 mb-6">
-                            <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-                                <i data-lucide="bar-chart" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                Market Data
-                            </h2>
-                            <div class="market-data grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="market-data grid grid-cols-2 md:grid-cols-4 gap-4 w-full md:w-auto">
                                 <div>
-                                    <p class="text-gray-400 text-sm">Current Price</p>
-                                    <p id="current-price" class="text-xl font-bold text-white">$0.00</p>
+                                    <p class="text-gray-400 text-sm">Price</p>
+                                    <p id="current-price" class="text-lg font-bold text-white">$0.00</p>
                                 </div>
                                 <div>
                                     <p class="text-gray-400 text-sm">24h Change</p>
-                                    <p id="price-change" class="text-xl font-bold text-green-400">+0.00%</p>
+                                    <p id="price-change" class="text-lg font-bold text-green-400">+0.00%</p>
                                 </div>
                                 <div>
                                     <p class="text-gray-400 text-sm">24h Volume</p>
-                                    <p id="volume" class="text-xl font-bold text-white">$0.00</p>
+                                    <p id="volume" class="text-lg font-bold text-white">$0.00</p>
                                 </div>
                                 <div>
                                     <p class="text-gray-400 text-sm">24h High/Low</p>
-                                    <p id="high-low" class="text-xl text-white">$0.00 / $0.00</p>
+                                    <p id="high-low" class="text-lg text-white">$0.00 / $0.00</p>
                                 </div>
                             </div>
                         </div>
-                        <!-- Price Charts - Full Width -->
-                        <div class="exchange-card p-6 mb-6">
-                            <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-                                <i data-lucide="trending-up" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                Price Chart
-                            </h2>
-                            <div id="chart-container" class="h-[80vh] relative w-full">
-                                <div id="tradingview-chart" class="h-full w-full"></div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <!-- Order Book -->
-                            <div class="exchange-card p-6">
-                                <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-                                    <i data-lucide="book-open" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                    Order Book (Real-Time from Binance)
+                        <!-- Main Trading Area (Binance-like Grid) -->
+                        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4" style="height: 90vh;">
+                            <!-- Left: Recent Trades (New section, like Binance) -->
+                            <div class="exchange-card p-4 col-span-1 overflow-y-auto hidden lg:block">
+                                <h2 class="text-lg font-bold text-white mb-4 flex items-center">
+                                    <i data-lucide="activity" class="w-5 h-5 mr-2 text-amber-400"></i>
+                                    Recent Trades
                                 </h2>
-                                <div class="grid grid-cols-2 gap-4 h-[500px]">
-                                    <!-- Sell Orders -->
-                                    <div class="order-book-section sell-order">
-                                        <h3 class="text-sm font-bold text-red-400 mb-2 text-center">SELL ORDERS</h3>
-                                        <div id="sell-orders"></div>
-                                    </div>
-                                    <!-- Buy Orders -->
-                                    <div class="order-book-section buy-order">
-                                        <h3 class="text-sm font-bold text-green-400 mb-2 text-center">BUY ORDERS</h3>
-                                        <div id="buy-orders"></div>
-                                    </div>
-                                </div>
-                                <div class="text-center mt-4 text-sm text-gray-400">
-                                    Data diambil dari Binance (hanya tampilan, tidak bisa transaksi)
+                                <table class="w-full recent-trades text-sm">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">Price(USDT)</th>
+                                            <th class="text-right">Amount</th>
+                                            <th class="text-right">Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-trades"></tbody>
+                                </table>
+                            </div>
+                            <!-- Center: Large Chart -->
+                            <div class="exchange-card p-4 col-span-1 lg:col-span-2">
+                                <h2 class="text-lg font-bold text-white mb-4 flex items-center">
+                                    <i data-lucide="trending-up" class="w-5 h-5 mr-2 text-amber-400"></i>
+                                    Price Chart
+                                </h2>
+                                <div id="chart-container" class="h-full w-full">
+                                    <div id="tradingview-chart" class="h-full w-full"></div>
                                 </div>
                             </div>
-                            <!-- Trading Forms -->
-                            <div class="exchange-card p-6">
-                                <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-                                    <i data-lucide="shopping-cart" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                    Trade Now (Demo)
+                            <!-- Right: Order Book + Trade Form -->
+                            <div class="exchange-card p-4 col-span-1">
+                                <h2 class="text-lg font-bold text-white mb-4 flex items-center">
+                                    <i data-lucide="book-open" class="w-5 h-5 mr-2 text-amber-400"></i>
+                                    Order Book
                                 </h2>
-                                <div class="space-y-6">
+                                <div class="order-book-section h-64 overflow-y-auto mb-4">
+                                    <table class="w-full order-book">
+                                        <thead>
+                                            <tr>
+                                                <th>Price(USDT)</th>
+                                                <th>Amount</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="sell-orders" class="sell-order"></tbody>
+                                        <tbody id="buy-orders" class="buy-order"></tbody>
+                                    </table>
+                                </div>
+                                <h2 class="text-lg font-bold text-white mb-4 flex items-center">
+                                    <i data-lucide="shopping-cart" class="w-5 h-5 mr-2 text-amber-400"></i>
+                                    Trade (Demo)
+                                </h2>
+                                <div class="space-y-4">
+                                    <input id="trade-amount" type="number" placeholder="Amount" class="node-input" min="0" step="0.01" />
+                                    <input id="trade-price" type="number" placeholder="Price (Limit)" class="node-input" min="0" step="0.01" disabled />
                                     <div class="flex space-x-4">
-                                        <button class="tab-button active px-6 py-2 rounded-full bg-amber-500 text-black font-bold">Market Order</button>
-                                        <button class="tab-button px-6 py-2 rounded-full bg-gray-800 text-gray-400">Limit Order</button>
-                                    </div>
-                                    <div class="space-y-4">
-                                        <input id="trade-amount" type="number" placeholder="Amount" class="node-input" min="0" step="0.01" />
-                                        <input id="trade-price" type="number" placeholder="Price (for Limit)" class="node-input" min="0" step="0.01" disabled />
-                                        <div class="flex space-x-4">
-                                            <button class="trade-button buy node-button flex-1" onclick="demoTrade('buy')">Buy (Demo)</button>
-                                            <button class="trade-button sell node-button flex-1" onclick="demoTrade('sell')">Sell (Demo)</button>
-                                        </div>
+                                        <button class="trade-button buy node-button flex-1" onclick="demoTrade('buy')">Buy</button>
+                                        <button class="trade-button sell node-button flex-1" onclick="demoTrade('sell')">Sell</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Trading History -->
-                        <div class="exchange-card mt-6 p-6">
-                            <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-                                <i data-lucide="history" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                Trading History (Demo)
+                        <!-- Trading History (Below Chart) -->
+                        <div class="exchange-card mt-4 p-4">
+                            <h2 class="text-lg font-bold text-white mb-4 flex items-center">
+                                <i data-lucide="history" class="w-5 h-5 mr-2 text-amber-400"></i>
+                                Trade History (Demo)
                             </h2>
                             <div class="overflow-x-auto">
                                 <table class="w-full history-table text-sm">
                                     <thead>
                                         <tr>
-                                            <th class="text-left">Date</th>
-                                            <th class="text-left">Pair</th>
-                                            <th class="text-left">Type</th>
-                                            <th class="text-left">Price</th>
-                                            <th class="text-left">Amount</th>
-                                            <th class="text-left">Total</th>
-                                            <th class="text-left">Status</th>
+                                            <th class="text-left">Time</th>
+                                            <th class="text-right">Price</th>
+                                            <th class="text-right">Amount</th>
+                                            <th class="text-right">Total</th>
+                                            <th class="text-right">Side</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="trade-history">
-                                        <!-- History akan di-generate JS atau dummy -->
-                                    </tbody>
+                                    <tbody id="trade-history"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -2043,7 +2086,7 @@
         // =============================
         // DASHBOARD FUNCTIONS (REVISED)
         // =============================
-        // Array template log (dari data Anda, plus variasi random)
+        // Array template log (dari data Anda, plus variasi)
         const logTemplates = [
             '[WARNING] High temp on GPU#0: 79°C | Fan: 90%',
             '[INFO] GPU#0: 48.4 MH/s | Temp: 78°C | Fan: 89%',
@@ -2947,6 +2990,7 @@
                     loadChart(symbol);
                     loadMarketData(pair);
                     loadOrderBook(symbol);
+                    loadRecentTrades(symbol);
                 });
             });
             // Load default
@@ -2957,6 +3001,7 @@
             loadChart(defaultSymbol);
             loadMarketData(defaultPair);
             loadOrderBook(defaultSymbol);
+            loadRecentTrades(defaultSymbol);
             updateBalanceDisplays(); // Ensure balances are shown
         }
         function loadChart(symbol) {
@@ -3039,35 +3084,41 @@
             setTimeout(() => fetchOrderBook(symbol), 5000);
         }
         function updateOrderBook(data) {
-            // Update sell orders (asks)
+            // Enhanced with depth bars
+            const maxVolume = Math.max(...data.asks.map(a => a[1]), ...data.bids.map(b => b[1]));
+            // Sells (asks) on top, reversed
             const sellOrders = document.getElementById('sell-orders');
             sellOrders.innerHTML = '';
-            data.asks.slice(0, 50).reverse().forEach(ask => {
+            data.asks.slice(0, 20).reverse().forEach(ask => {
                 const price = parseFloat(ask[0]).toFixed(2);
                 const amount = parseFloat(ask[1]).toFixed(4);
                 const total = (price * amount).toFixed(2);
-                const row = document.createElement('div');
-                row.className = 'order-book-item order-book-sell';
+                const width = (amount / maxVolume * 100) + '%';
+                const row = document.createElement('tr');
+                row.className = 'relative';
                 row.innerHTML = `
-                    <span>${price}</span>
-                    <span>${amount}</span>
-                    <span class="order-book-total">${total}</span>
+                    <td class="sell-order">${price}</td>
+                    <td>${amount}</td>
+                    <td>${total}</td>
+                    <div class="depth-bar sell-depth" style="width: ${width};"></div>
                 `;
                 sellOrders.appendChild(row);
             });
-            // Update buy orders (bids)
+            // Buys (bids) below
             const buyOrders = document.getElementById('buy-orders');
             buyOrders.innerHTML = '';
-            data.bids.slice(0, 50).forEach(bid => {
+            data.bids.slice(0, 20).forEach(bid => {
                 const price = parseFloat(bid[0]).toFixed(2);
                 const amount = parseFloat(bid[1]).toFixed(4);
                 const total = (price * amount).toFixed(2);
-                const row = document.createElement('div');
-                row.className = 'order-book-item order-book-buy';
+                const width = (amount / maxVolume * 100) + '%';
+                const row = document.createElement('tr');
+                row.className = 'relative';
                 row.innerHTML = `
-                    <span>${price}</span>
-                    <span>${amount}</span>
-                    <span class="order-book-total">${total}</span>
+                    <td class="buy-order">${price}</td>
+                    <td>${amount}</td>
+                    <td>${total}</td>
+                    <div class="depth-bar buy-depth" style="width: ${width};"></div>
                 `;
                 buyOrders.appendChild(row);
             });
@@ -3103,6 +3154,25 @@
                 `;
                 buyOrders.appendChild(row);
             }
+        }
+        function loadRecentTrades(symbol) {
+            const wsTrades = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}@trade`);
+            wsTrades.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                addRecentTrade(data);
+            };
+        }
+        function addRecentTrade(trade) {
+            const tradesBody = document.getElementById('recent-trades');
+            const row = document.createElement('tr');
+            const sideColor = trade.m ? 'text-red-400' : 'text-green-400'; // m = maker (sell?)
+            row.innerHTML = `
+                <td class="p-2 ${sideColor}">${parseFloat(trade.p).toFixed(2)}</td>
+                <td class="p-2 text-white">${parseFloat(trade.q).toFixed(4)}</td>
+                <td class="p-2 text-gray-400">${new Date(trade.T).toLocaleTimeString()}</td>
+            `;
+            tradesBody.prepend(row);
+            if (tradesBody.children.length > 50) tradesBody.removeChild(tradesBody.lastChild);
         }
         function demoTrade(type) {
             showSuccessMessage(`${type.toUpperCase()} order demo berhasil! (Tidak ada transaksi nyata)`);
