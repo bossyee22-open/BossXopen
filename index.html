@@ -848,6 +848,30 @@
             animation: borderLeft 3s linear infinite 2.1s;
             transform-origin: bottom;
         }
+        /* Order Book Styles */
+        .order-book-section {
+            height: 500px;
+            overflow-y: auto;
+        }
+        .order-book-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 8px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        .order-book-item:hover {
+            background: rgba(245, 158, 11, 0.05);
+        }
+        .order-book-buy {
+            color: #10b981;
+        }
+        .order-book-sell {
+            color: #dc2626;
+        }
+        .order-book-total {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -1707,93 +1731,82 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-                            <!-- Chart and Market Data -->
-                            <div class="lg:col-span-3">
-                                <!-- Market Data di atas -->
-                                <div class="exchange-card p-6 mb-6">
-                                    <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-                                        <i data-lucide="bar-chart" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                        Market Data
-                                    </h2>
-                                    <div class="market-data grid grid-cols-2 md:grid-cols-4 gap-4">
-                                        <div>
-                                            <p class="text-gray-400 text-sm">Current Price</p>
-                                            <p id="current-price" class="text-xl font-bold text-white">$0.00</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-gray-400 text-sm">24h Change</p>
-                                            <p id="price-change" class="text-xl font-bold text-green-400">+0.00%</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-gray-400 text-sm">24h Volume</p>
-                                            <p id="volume" class="text-xl font-bold text-white">$0.00</p>
-                                        </div>
-                                        <div>
-                                            <p class="text-gray-400 text-sm">24h High/Low</p>
-                                            <p id="high-low" class="text-xl text-white">$0.00 / $0.00</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Price Charts -->
-                                <div class="exchange-card p-6">
-                                    <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-                                        <i data-lucide="trending-up" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                        Price Chart
-                                    </h2>
-                                    <div id="chart-container" class="h-96 relative">
-                                        <div id="tradingview-chart" class="h-full" style="display: none;"></div>
-                                        <canvas id="custom-chart" class="h-full w-full" style="display: none;"></canvas>
-                                    </div>
-                                </div>
+                        <!-- Pair Selector -->
+                        <div class="exchange-card p-6 mb-6">
+                            <h2 class="text-xl font-bold text-white mb-4 flex items-center">
+                                <i data-lucide="coins" class="w-6 h-6 mr-2 text-amber-400"></i>
+                                Trading Pairs
+                            </h2>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                                <button class="pair-button active" data-pair="BossX/USDT">BossX/USDT</button>
+                                <button class="pair-button" data-pair="BTC/USDT">BTC/USDT</button>
+                                <button class="pair-button" data-pair="ETH/USDT">ETH/USDT</button>
+                                <button class="pair-button" data-pair="SOL/USDT">SOL/USDT</button>
                             </div>
-                            <!-- Pair Selector di samping kanan -->
-                            <div class="pair-selector exchange-card p-6">
-                                <h2 class="text-xl font-bold text-white mb-4 flex items-center">
-                                    <i data-lucide="coins" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                    Trading Pairs
-                                </h2>
-                                <div class="space-y-4">
-                                    <button class="pair-button active" data-pair="BossX/USDT">BossX/USDT</button>
-                                    <button class="pair-button" data-pair="BTC/USDT">BTC/USDT</button>
-                                    <button class="pair-button" data-pair="ETH/USDT">ETH/USDT</button>
-                                    <button class="pair-button" data-pair="SOL/USDT">SOL/USDT</button>
+                        </div>
+                        <!-- Market Data -->
+                        <div class="exchange-card p-6 mb-6">
+                            <h2 class="text-xl font-bold text-white mb-4 flex items-center">
+                                <i data-lucide="bar-chart" class="w-6 h-6 mr-2 text-amber-400"></i>
+                                Market Data
+                            </h2>
+                            <div class="market-data grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div>
+                                    <p class="text-gray-400 text-sm">Current Price</p>
+                                    <p id="current-price" class="text-xl font-bold text-white">$0.00</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-sm">24h Change</p>
+                                    <p id="price-change" class="text-xl font-bold text-green-400">+0.00%</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-sm">24h Volume</p>
+                                    <p id="volume" class="text-xl font-bold text-white">$0.00</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-400 text-sm">24h High/Low</p>
+                                    <p id="high-low" class="text-xl text-white">$0.00 / $0.00</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                        <!-- Price Charts - Full Width -->
+                        <div class="exchange-card p-6 mb-6">
+                            <h2 class="text-xl font-bold text-white mb-4 flex items-center">
+                                <i data-lucide="trending-up" class="w-6 h-6 mr-2 text-amber-400"></i>
+                                Price Chart
+                            </h2>
+                            <div id="chart-container" class="h-[600px] relative w-full">
+                                <div id="tradingview-chart" class="h-full w-full"></div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             <!-- Order Book -->
                             <div class="exchange-card p-6">
                                 <h2 class="text-xl font-bold text-white mb-4 flex items-center">
                                     <i data-lucide="book-open" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                    Order Book (Real-Time)
+                                    Order Book (Real-Time from Binance)
                                 </h2>
-                                <div class="overflow-x-auto">
-                                    <table class="w-full order-book text-sm">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-left">Price (USDT)</th>
-                                                <th class="text-left">Amount</th>
-                                                <th class="text-left">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="sell-orders" class="sell-order">
-                                            <!-- Sell orders akan di-generate JS -->
-                                        </tbody>
-                                        <tr class="bg-amber-500/10">
-                                            <td colspan="3" class="text-center font-bold text-amber-400 py-2">Current Price: $0.00</td>
-                                        </tr>
-                                        <tbody id="buy-orders" class="buy-order">
-                                            <!-- Buy orders akan di-generate JS -->
-                                        </tbody>
-                                    </table>
+                                <div class="grid grid-cols-2 gap-4 h-[500px]">
+                                    <!-- Sell Orders -->
+                                    <div class="order-book-section sell-order">
+                                        <h3 class="text-sm font-bold text-red-400 mb-2 text-center">SELL ORDERS</h3>
+                                        <div id="sell-orders"></div>
+                                    </div>
+                                    <!-- Buy Orders -->
+                                    <div class="order-book-section buy-order">
+                                        <h3 class="text-sm font-bold text-green-400 mb-2 text-center">BUY ORDERS</h3>
+                                        <div id="buy-orders"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center mt-4 text-sm text-gray-400">
+                                    Data diambil dari Binance (hanya tampilan, tidak bisa transaksi)
                                 </div>
                             </div>
                             <!-- Trading Forms -->
                             <div class="exchange-card p-6">
                                 <h2 class="text-xl font-bold text-white mb-4 flex items-center">
                                     <i data-lucide="shopping-cart" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                    Trade Now
+                                    Trade Now (Demo)
                                 </h2>
                                 <div class="space-y-6">
                                     <div class="flex space-x-4">
@@ -1804,8 +1817,8 @@
                                         <input id="trade-amount" type="number" placeholder="Amount" class="node-input" min="0" step="0.01" />
                                         <input id="trade-price" type="number" placeholder="Price (for Limit)" class="node-input" min="0" step="0.01" disabled />
                                         <div class="flex space-x-4">
-                                            <button class="trade-button buy node-button flex-1">Buy</button>
-                                            <button class="trade-button sell node-button flex-1">Sell</button>
+                                            <button class="trade-button buy node-button flex-1" onclick="demoTrade('buy')">Buy (Demo)</button>
+                                            <button class="trade-button sell node-button flex-1" onclick="demoTrade('sell')">Sell (Demo)</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1815,7 +1828,7 @@
                         <div class="exchange-card mt-6 p-6">
                             <h2 class="text-xl font-bold text-white mb-4 flex items-center">
                                 <i data-lucide="history" class="w-6 h-6 mr-2 text-amber-400"></i>
-                                Trading History
+                                Trading History (Demo)
                             </h2>
                             <div class="overflow-x-auto">
                                 <table class="w-full history-table text-sm">
@@ -1951,6 +1964,7 @@
         };
         // P2P variables
         const p2pHistory = [];
+        let ws; // WebSocket for order book
         // Real-time clock
         function updateClock() {
             const now = new Date();
@@ -2920,6 +2934,7 @@
             copyToClipboard(code);
         }
         // Exchange Functions
+        let currentSymbol = 'BTCUSDT'; // Default
         function initExchangePage() {
             // Setup pair buttons
             document.querySelectorAll('.pair-button').forEach(btn => {
@@ -2927,25 +2942,30 @@
                     document.querySelectorAll('.pair-button').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     const pair = btn.dataset.pair;
-                    loadChart(pair);
+                    const symbol = pair === 'BossX/USDT' ? 'BTCUSDT' : pair.replace('/', '');
+                    currentSymbol = symbol;
+                    loadChart(symbol);
                     loadMarketData(pair);
+                    loadOrderBook(symbol);
                 });
             });
             // Load default
             const defaultPair = 'BossX/USDT';
+            const defaultSymbol = 'BTCUSDT';
             document.querySelector(`[data-pair="${defaultPair}"]`).classList.add('active');
-            loadChart(defaultPair);
+            currentSymbol = defaultSymbol;
+            loadChart(defaultSymbol);
             loadMarketData(defaultPair);
+            loadOrderBook(defaultSymbol);
             updateBalanceDisplays(); // Ensure balances are shown
         }
-        function loadChart(pair) {
+        function loadChart(symbol) {
             const chartContainer = document.getElementById('tradingview-chart');
             chartContainer.innerHTML = ''; // Clear previous widget
-            let symbol = pair === 'BossX/USDT' ? 'BINANCE:BTCUSDT' : `BINANCE:${pair.replace('/', '')}`;
             new TradingView.widget({
                 "width": "100%",
                 "height": "100%",
-                "symbol": symbol,
+                "symbol": `BINANCE:${symbol}`,
                 "interval": "D",
                 "timezone": "Etc/UTC",
                 "theme": "dark",
@@ -2956,8 +2976,6 @@
                 "allow_symbol_change": true,
                 "container_id": "tradingview-chart"
             });
-            chartContainer.style.display = 'block';
-            document.getElementById('custom-chart').style.display = 'none';
         }
         function loadMarketData(pair) {
             if (pair === 'BossX/USDT') {
@@ -2992,6 +3010,102 @@
             document.getElementById('price-change').textContent = change;
             document.getElementById('volume').textContent = `$${volume.toLocaleString()}`;
             document.getElementById('high-low').textContent = highlow;
+        }
+        // Order Book Functions
+        function loadOrderBook(symbol) {
+            if (ws) ws.close();
+            if (symbol === 'BTCUSDT') { // Dummy for BossX, use BTC for others
+                ws = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}@depth@100ms`);
+                ws.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    updateOrderBook(data);
+                };
+                ws.onerror = function(error) {
+                    console.error('WebSocket error:', error);
+                    // Fallback to REST
+                    fetchOrderBook(symbol);
+                };
+            } else {
+                // For BossX, use dummy
+                generateDummyOrderBook();
+            }
+        }
+        function fetchOrderBook(symbol) {
+            fetch(`https://api.binance.com/api/v3/depth?symbol=${symbol}&limit=50`)
+                .then(response => response.json())
+                .then(data => updateOrderBook(data))
+                .catch(err => console.error('Error fetching order book:', err));
+            // Refresh every 5 seconds
+            setTimeout(() => fetchOrderBook(symbol), 5000);
+        }
+        function updateOrderBook(data) {
+            // Update sell orders (asks)
+            const sellOrders = document.getElementById('sell-orders');
+            sellOrders.innerHTML = '';
+            data.asks.slice(0, 50).reverse().forEach(ask => {
+                const price = parseFloat(ask[0]).toFixed(2);
+                const amount = parseFloat(ask[1]).toFixed(4);
+                const total = (price * amount).toFixed(2);
+                const row = document.createElement('div');
+                row.className = 'order-book-item order-book-sell';
+                row.innerHTML = `
+                    <span>${price}</span>
+                    <span>${amount}</span>
+                    <span class="order-book-total">${total}</span>
+                `;
+                sellOrders.appendChild(row);
+            });
+            // Update buy orders (bids)
+            const buyOrders = document.getElementById('buy-orders');
+            buyOrders.innerHTML = '';
+            data.bids.slice(0, 50).forEach(bid => {
+                const price = parseFloat(bid[0]).toFixed(2);
+                const amount = parseFloat(bid[1]).toFixed(4);
+                const total = (price * amount).toFixed(2);
+                const row = document.createElement('div');
+                row.className = 'order-book-item order-book-buy';
+                row.innerHTML = `
+                    <span>${price}</span>
+                    <span>${amount}</span>
+                    <span class="order-book-total">${total}</span>
+                `;
+                buyOrders.appendChild(row);
+            });
+        }
+        function generateDummyOrderBook() {
+            const sellOrders = document.getElementById('sell-orders');
+            sellOrders.innerHTML = '';
+            for (let i = 0; i < 50; i++) {
+                const price = (0.001 + i * 0.00001).toFixed(6);
+                const amount = (Math.random() * 100 + 1).toFixed(4);
+                const total = (parseFloat(price) * parseFloat(amount)).toFixed(6);
+                const row = document.createElement('div');
+                row.className = 'order-book-item order-book-sell';
+                row.innerHTML = `
+                    <span>${price}</span>
+                    <span>${amount}</span>
+                    <span class="order-book-total">${total}</span>
+                `;
+                sellOrders.appendChild(row);
+            }
+            const buyOrders = document.getElementById('buy-orders');
+            buyOrders.innerHTML = '';
+            for (let i = 0; i < 50; i++) {
+                const price = (0.001 - i * 0.00001).toFixed(6);
+                const amount = (Math.random() * 100 + 1).toFixed(4);
+                const total = (parseFloat(price) * parseFloat(amount)).toFixed(6);
+                const row = document.createElement('div');
+                row.className = 'order-book-item order-book-buy';
+                row.innerHTML = `
+                    <span>${price}</span>
+                    <span>${amount}</span>
+                    <span class="order-book-total">${total}</span>
+                `;
+                buyOrders.appendChild(row);
+            }
+        }
+        function demoTrade(type) {
+            showSuccessMessage(`${type.toUpperCase()} order demo berhasil! (Tidak ada transaksi nyata)`);
         }
         // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
