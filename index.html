@@ -931,7 +931,7 @@
         <div id="sidebar" class="sidebar h-screen gradient-bg gradient-border">
             <!-- Header with Logo -->
             <div class="p-3 border-b border-amber-500/20">
-                <div class="flex flex items-center justify-between">
+                <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-2">
                         <div class="crypto-icon">
                             <img src="https://i.ibb.co/qYBkPDH3/Picsart-25-04-01-16-25-47-054.png" alt="BossX Logo" onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\\'background: linear-gradient(145deg, #f59e0b, #d97706); color: white; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.75rem;\\'>BX</div>'" />
@@ -1842,7 +1842,7 @@
                         <div class="exchange-card p-4 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                             <div>
                                 <h2 class="text-lg font-bold text-white mb-2">Trading Pairs</h2>
-                                <div class="flex flex-wrap gap-2">
+                                <div class="flex flex-row gap-2 overflow-x-auto">
                                     <button class="pair-button active" data-pair="BossX/USDT">BossX/USDT</button>
                                     <button class="pair-button" data-pair="BTC/USDT">BTC/USDT</button>
                                     <button class="pair-button" data-pair="ETH/USDT">ETH/USDT</button>
@@ -1869,24 +1869,7 @@
                             </div>
                         </div>
                         <!-- Main Trading Area (Binance-like Grid) -->
-                        <div class="grid grid-cols-1 lg:grid-cols-4 gap-4" style="height: 90vh;">
-                            <!-- Left: Recent Trades (New section, like Binance) -->
-                            <div class="exchange-card p-4 col-span-1 overflow-y-auto hidden lg:block">
-                                <h2 class="text-lg font-bold text-white mb-4 flex items-center">
-                                    <i data-lucide="activity" class="w-5 h-5 mr-2 text-amber-400"></i>
-                                    Recent Trades
-                                </h2>
-                                <table class="w-full recent-trades text-sm">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-left">Price(USDT)</th>
-                                            <th class="text-right">Amount</th>
-                                            <th class="text-right">Time</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="recent-trades"></tbody>
-                                </table>
-                            </div>
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4" style="height: 90vh;">
                             <!-- Center: Large Chart -->
                             <div class="exchange-card p-4 col-span-1 lg:col-span-2">
                                 <h2 class="text-lg font-bold text-white mb-4 flex items-center">
@@ -1928,27 +1911,6 @@
                                         <button class="trade-button sell node-button flex-1" onclick="demoTrade('sell')">Sell</button>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <!-- Trading History (Below Chart) -->
-                        <div class="exchange-card mt-4 p-4">
-                            <h2 class="text-lg font-bold text-white mb-4 flex items-center">
-                                <i data-lucide="history" class="w-5 h-5 mr-2 text-amber-400"></i>
-                                Trade History (Demo)
-                            </h2>
-                            <div class="overflow-x-auto">
-                                <table class="w-full history-table text-sm">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-left">Time</th>
-                                            <th class="text-right">Price</th>
-                                            <th class="text-right">Amount</th>
-                                            <th class="text-right">Total</th>
-                                            <th class="text-right">Side</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="trade-history"></tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -3685,9 +3647,7 @@
                                                             },
                                                             h('div', { className: "flex flex-col items-center gap-1" },
                                                                 h('div', {
-                                                                    className: `w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${
-                                                                        message.isUser ? 'bg-gradient-to-br from-blue-500 to-purple-600' : 'bg-gradient-to-br from-amber-500 to-orange-600'
-                                                                    }`
+                                                                    className: `w-10 h-10 rounded-full flex items-center justify-center font-bold text-white ${message.isUser ? 'bg-gradient-to-br from-blue-500 to-purple-600' : 'bg-gradient-to-br from-amber-500 to-orange-600'}`
                                                                 }, getAvatarLetter(message.sender)),
                                                                 h('span', { className: "text-xs text-gray-400 max-w-[60px] truncate" }, message.sender)
                                                             ),
